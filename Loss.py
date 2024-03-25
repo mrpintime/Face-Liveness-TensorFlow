@@ -15,3 +15,4 @@ class PixWiseBCELoss(tf.keras.losses.Loss):
         binary_loss = self.criterion(target_label, net_label)
         loss = pixel_loss * self.beta + binary_loss * (1 - self.beta)
         return loss
+
