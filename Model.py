@@ -31,7 +31,9 @@ class Model:
             y_train_label = y_train_label[indices]
             y_train_mask = y_train_mask[indices]
         # using GradientTape to update weights
-        @tf.function
+        # Using tf.function decorator on train_step could potentially improve performance, 
+        # I would recommend experimenting with both options: with and without tf.function, and measure the performance difference.
+        @tf.function 
         def train_step(x_batch, y_mask_batch, y_label_batch):
             with tf.GradientTape() as tape:
                 out_mask, out_label = self.model(x_batch)
