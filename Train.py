@@ -8,12 +8,17 @@ from Data_Loader import Data_Loader
 model = Model()
 
 #======================# prepare data #======================
-Data_LoaderObj = Data_Loader()
+Data_LoaderObj = Data_Loader(augmentation=False)
 directory = 'data/images/Train'
-imgs, labels = Data_LoaderObj.load_images_from_directory(directory=directory)
-# print(imgs.shape, labels.shape)
-# preproccess data
-x_train, y_train_label, y_train_mask = Data_LoaderObj.prepare_data(img=imgs, all_label=labels)
+if not Data_LoaderObj.augmentation:
+    imgs, labels = Data_LoaderObj.load_images_from_directory(directory=directory)
+    # print(imgs.shape, labels.shape)
+    # preproccess data
+    x_train, y_train_label, y_train_mask = Data_LoaderObj.prepare_data(img=imgs, all_label=labels)
+    
+else:
+    #TODO: Implement data proccesing with augmented data
+    pass
 
 #======================# End #======================
 
