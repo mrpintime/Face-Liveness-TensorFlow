@@ -8,8 +8,8 @@ Face anti-spoofing is a crucial task in computer vision, especially in security-
 
 ## Paper
 
-The paper detailing the approach implemented in this repository can be found on [arXiv](https://arxiv.org/pdf/1907.04047v1.pdf).
-
+The paper detailing the approach implemented in this repository can be found on [arXiv](https://arxiv.org/pdf/1907.04047v1.pdf).  
+The page of this task on [PapersWithCode](https://paperswithcode.com/paper/deep-pixel-wise-binary-supervision-for-face).
 ## Implementation
 
 The implementation is provided in TensorFlow, a popular deep learning framework. The codebase includes the necessary scripts to train, evaluate, and test the face anti-spoofing model using the deep pixel-wise binary supervision technique.
