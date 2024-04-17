@@ -26,27 +26,23 @@ while cv.waitKey(1) & 0xFF != ord("q"):
             enforce_detection=True,
             detector_backend='mediapipe'
         )[0]
-        faceRegions = []
+        
         x, y, w, h, _, _  = extracted_face["facial_area"].values()
-        face = extracted_face["face"].astype('uint8')
-        faceRegions.append(face)
-
-        faceRegionsTensor = tf.convert_to_tensor(faceRegions, dtype=tf.float64)
-
+        face = extracted_face["face"]
+        face = np.expand_dims(face, axis=0)
         try:
             # Model prediction
-            mask, binary = model(faceRegionsTensor)
+            mask, binary = model(face)
         except tf.errors.ResourceExhaustedError:
             print("Reducing batch size due to memory constraints")
             batch_size = max(1, batch_size // 2)  # Reduce batch size
 
-        res = tf.reduce_mean(mask).numpy()
-        # res = binary.item()
+        threshold = np.mean(mask)
 
         cv.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
-        print(res)
-        if  res > 0.1:
+        print(threshold)
+        if  threshold > 0.5:
             cv.putText(
                 img, "Real", (x, y + h + 30), cv.FONT_HERSHEY_COMPLEX, 1, (255, 0, 0)
             )
