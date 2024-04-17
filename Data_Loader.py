@@ -78,7 +78,7 @@ class Data_Loader:
         for image, label in zip(img, all_label):
             label_tensortype = tf.cast(label, dtype=tf.float32)
             label = label_tensortype
-            map_size = 28  # this is size of our feature mao that will produce in model
+            map_size = 14  # this is size of our feature mao that will produce in model
             if label == 0:
                 mask = np.ones((1, map_size, map_size), dtype=np.float32) * (
                     1 - label_weight
