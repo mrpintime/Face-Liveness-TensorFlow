@@ -6,16 +6,15 @@ import numpy as np
 class Model:
     def __init__(self) -> None:
         # Load DenseNet121
-        dense = tf.keras.applications.DenseNet121(include_top=False)
+        dense = tf.keras.applications.DenseNet121(include_top=False, input_shape=(224,224,3))
         self.features = dense.layers
         # Extract desirable layers from DenseNet121
-        enc = self.features[:109]
-        x = enc[-1].output
-        out_feature_map = tf.keras.layers.Conv2D(
-            1, (1, 1), padding="valid", strides=1, activation="sigmoid"
-        )(x)
-        out_map_flat = tf.reshape(out_feature_map, (-1, 28 * 28))
-        out_binary = tf.keras.layers.Dense(1, activation="sigmoid")(out_map_flat)
+        enc = self.features[:171]
+        x = enc[-1].output  # Get output of the last extracted layer
+        out_feature_map = tf.keras.layers.Conv2D(1,(1,1), padding='same', strides=1, activation='sigmoid')(x)
+        out_map_flat = tf.keras.layers.Flatten()(out_feature_map)
+        out_binary = tf.keras.layers.Dense(1, activation='sigmoid')(out_map_flat)
+        # Define a new model using the extracted layers and optionally your own layers
         input = enc[0].input
         self.model = tf.keras.Model(inputs=input, outputs=[out_feature_map, out_binary])
         self.loss = PixWiseBCELoss(beta=0.5)
